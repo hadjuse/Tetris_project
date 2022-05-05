@@ -58,7 +58,7 @@ void place_piece(char block[LINE_B][COLUMN_B], char grid[LINE_G][COLUMN_G], int 
     {
         int x = pos_x[j];
         int y = pos_y[j];
-        grid[x][y+column] = '@';
+        grid[x][y+column] = '@';  //ici si tu modifies grid[9-x] cela commencera du bas.
     }
 }
 void show_block(char block[LINE_B][COLUMN_B])
