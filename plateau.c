@@ -10,7 +10,7 @@ void Generate(char tab[LINE][COLUMN])
     {
         for (int c = 0; c<COLUMN; c++)
         {
-            tab[LINE][COLUMN] = ' ';
+            tab[l][c] =' ';
         }
     }
 }
@@ -18,7 +18,7 @@ void Generate(char tab[LINE][COLUMN])
 void show_grid(char tab[LINE][COLUMN])
 {
     printf("This is your grid:\n");
-    // I made the 22th line in 1 line beause there is only one instruction
+    // I made the 23th line in 1 line beause there is only one instruction
     for (int i=0; i<10; i++){printf(" %c", (char)65+i);}
     printf("\n");
     for (int l = 0; l<LINE; l++)
@@ -26,7 +26,7 @@ void show_grid(char tab[LINE][COLUMN])
         for (int c = 0; c<COLUMN; c++)
         {
             printf("|");
-            printf("%c", tab[LINE][COLUMN]);
+            printf("%c", tab[l][c]);
         }
         printf("|");
         printf("\n");
