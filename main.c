@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Block.h"
 #include "plateau.h"
+#include "game.h"
 #define LINE 10
 #define COLUMN 10
 #define LINE_B 4
@@ -9,15 +10,6 @@
 //this file is the main execution of all programms.
 int main()
 {
-    char block[LINE_B][COLUMN_B];
-    char grid[LINE][COLUMN];
-    Generate(grid);
-    //show_grid(grid);
-    Gen_block(block);  
-    int column=choose_col();
-    place_piece(block,grid, column-1);
-    printf("\n");
-    show_block(block);
-    show_grid(grid);
+    game();
     return 0;
 }
