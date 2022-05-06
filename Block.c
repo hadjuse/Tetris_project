@@ -5,6 +5,31 @@
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
+int choose_col()
+{
+    int column;
+    printf("Choisir colonne entre 1 et 9\n");
+    scanf("%d", &column);
+    int bool =1;
+    while (bool)
+    {
+        if (column>9)
+        {
+            printf("Choisir colonne entre 1 et 10\n");
+            scanf("%d", &column);
+        }
+        else if (column<1)
+        {
+            printf("Choisir colonne entre 1 et 10\n");
+        scanf("%d", &column);
+        }
+        else
+        {
+            bool = 0;
+        }
+    };
+    return column;
+}
 void clean_Block(char block[LINE_B][COLUMN_B])
 {
     for (int l = 0; l<LINE_B; l++)
@@ -58,7 +83,7 @@ void place_piece(char block[LINE_B][COLUMN_B], char grid[LINE_G][COLUMN_G], int 
     {
         int x = pos_x[j];
         int y = pos_y[j];
-        grid[x][y+column] = '@';  //ici si tu modifies grid[9-x] cela commencera du bas.
+        grid[9-x][y+column] = '@';
     }
 }
 void show_block(char block[LINE_B][COLUMN_B])

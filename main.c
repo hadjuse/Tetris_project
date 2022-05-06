@@ -13,10 +13,8 @@ int main()
     char grid[LINE][COLUMN];
     Generate(grid);
     //show_grid(grid);
-    Gen_block(block);
-    int column;
-    printf("Choisir colonne entre 1 et 10\n");
-    scanf("%d", &column);
+    Gen_block(block);  
+    int column=choose_col();
     place_piece(block,grid, column-1);
     printf("\n");
     show_block(block);

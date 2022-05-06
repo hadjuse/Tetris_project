@@ -10,4 +10,5 @@ void clean_Block(char block[LINE_B][COLUMN_B]);
 void square(char block[LINE_B][COLUMN_B]);
 void place_piece(char block[LINE_B][COLUMN_B], char grid[LINE_G][COLUMN_G], int column);
 void show_block(char block[LINE_B][COLUMN_B]);
+int choose_col();
 #endif
