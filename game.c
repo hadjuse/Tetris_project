@@ -10,16 +10,15 @@
 void game()
 {
     char block[LINE_B][COLUMN_B];
-    char grid[LINE][COLUMN];
+    char grid[LINE_G][COLUMN_G];
     Generate(grid);
     //show_grid(grid);
-    for (int i =0; i <2; i++)    
+    for (int i =0; i <8; i++)    
     {
-        Gen_block(block); 
-        int column=choose_col(); 
-        place_piece(block,grid, column-1);
+        int column=choose_col(block); 
+        collision(grid,block, column-1);
         printf("\n");
         show_block(block);
-        show_grid(grid);
+        show_grid(grid);    
     }
 }
