@@ -5,7 +5,6 @@
 #include "plateau.h"
 #include "score.h"
 #include <time.h>
-//#include <conio.h>
 #define LINE 10
 #define COLUMN 10
 #define LINE_B 4
