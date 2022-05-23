@@ -3,51 +3,33 @@
 #include "plateau.h"
 #include <time.h>
 #include <stdlib.h>
+#include "couleur.h"
+#include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
+#include <curses.h>
 #define LINE_B 4
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
-//il faut continuer le top.
 int choose_col(char block[LINE_B][COLUMN_B])
 {
-    int column;
-    int rand_b= Gen_block(block);
-    printf("Choisir colonne entre 1 et 9\n");
-    scanf("%d", &column);
-    int bool =1;
-    while (bool)
-    {
-        if (column>9)
-        {
-            printf("Choisir colonne entre 1 et 9\n");
-            scanf("%d", &column);
-        }
-        else if (column<1)
-        {
-            printf("Choisir colonne entre 1 et 9\n");
-            scanf("%d", &column);
-        }
-        else if ((rand_b==2) && (column > 7))
-        {
-            printf("Choisir une colonne entre 1 et 7\n");
-            scanf("%d", &column);
-        }
-        else if ((rand_b==3) && (column > 8))
-        {
-            printf("Choisir une colonne entre 1 et 8\n");
-            scanf("%d", &column);
-        }
-        else if ((rand_b==4) && (column > 8))
-        {
-            printf("Choisir une colonne entre 1 et 8\n");
-            scanf("%d", &column);
-        }
-        else
-        {
-            bool = 0;
-        }
-    };
-    return column;
+   int column;
+   int rand_block_and_orientation= Gen_block(block);
+   int booleen = 0;
+   do 
+   {
+   		printf("Choose column btw 1 to 9\n");
+   		int boole = scanf("%d", &column);
+   		while (fgetc(stdin) != '\n'){};
+   		if (boole == 1)
+   		{
+   			booleen = 1;
+   		}
+   																			
+   }while ((booleen == 0) || (column<1 || column>9));
+   return column;
+
 }
 void clean_Block(char block[LINE_B][COLUMN_B])
 {
@@ -62,18 +44,18 @@ void clean_Block(char block[LINE_B][COLUMN_B])
 //All BLock----------------------------------------
 void square(char block[LINE_B][COLUMN_B])
 {
-    block[1][1]='@';
-    block[2][1]='@';
+    block[0][0]='@';
     block[1][0]='@';
-    block[2][0]='@';
+    block[0][1]='@';
+    block[1][1]='@';
 }
 //LINE and these orientations
 void Line(char block[LINE_B][COLUMN_B])
 {
-    block[1][0]='@';
-    block[1][1]='@';
-    block[1][2]='@';
-    block[1][3]='@';
+    block[0][0]='@';
+    block[0][1]='@';
+    block[0][2]='@';
+    block[0][3]='@';
 } 
 void Line_v(char block[LINE_B][COLUMN_B])
 {
@@ -85,23 +67,23 @@ void Line_v(char block[LINE_B][COLUMN_B])
 //-------------------------------
 //BLOCK T and these orientations
 void piece_en_T(char block[LINE_B][COLUMN_B]){
-    block[1][1]='@';
-    block[1][0]='@';
-    block[1][2]='@';
-    block[2][1]='@';   
+    block[0][1]='@';
+    block[0][0]='@';
+    block[0][2]='@';
+    block[1][1]='@';   
 }
 void piece_en_T_2(char block[LINE_B][COLUMN_B])
 {
-    block[0][1]='@';
+    block[0][0]='@';
     block[1][0]='@';
-    block[1][1]='@';
-    block[1][2]='@'; 
+    block[2][0]='@';
+    block[1][1]='@'; 
 }
 void piece_en_T_3(char block[LINE_B][COLUMN_B]){
     block[0][1]='@';
+    block[1][0]='@';
     block[1][1]='@';
     block[1][2]='@';
-    block[2][1]='@';
 }
 void piece_en_T_4(char block[LINE_B][COLUMN_B]){
     block[0][1]='@';
@@ -112,50 +94,50 @@ void piece_en_T_4(char block[LINE_B][COLUMN_B]){
 //---------------------
 //BLOCK Z and these orientations
 void piece_z(char block[LINE_B][COLUMN_B]){
-    block[1][0]='@';
-    block[1][1]='@';
-    block[2][1]='@';
-    block[2][2]='@';
-}
-void piece_z_2(char block[LINE_B][COLUMN_B]){
-    block[0][2]='@';
+    block[0][0]='@';
+    block[0][1]='@';
     block[1][1]='@';
     block[1][2]='@';
-    block[2][1]='@';
+}
+void piece_z_2(char block[LINE_B][COLUMN_B]){
+    block[0][1]='@';
+    block[1][0]='@';
+    block[1][1]='@';
+    block[2][0]='@';
 }
 //------------------------------
 ///BLOCK S and these orientations
 void piece_s(char block[LINE_B][COLUMN_B]){
+    block[1][0]='@';
     block[1][1]='@';
-    block[1][2]='@';
-    block[2][0]='@';
-    block[2][1]='@';
+    block[0][1]='@';
+    block[0][2]='@';
 }
 void piece_s_2(char block[LINE_B][COLUMN_B]){
-    block[0][1]='@';
+    block[0][0]='@';
+    block[1][0]='@';
     block[1][1]='@';
-    block[1][2]='@';
-    block[2][2]='@';
+    block[2][1]='@';
 }
 //-------------------------------------------------
 //BLOCK L and these orientations
 void piece_L(char block[LINE_B][COLUMN_B]){
-    block[1][0]='@';
-    block[1][1]='@';
-    block[1][2]='@';
-    block[2][0]='@';
-}
-void piece_L_2(char block[LINE_B][COLUMN_B]){
+    block[0][0]='@';
     block[0][1]='@';
-    block[1][1]='@';
-    block[2][1]='@';
-    block[2][2]='@';
-}
-void piece_L_3(char block[LINE_B][COLUMN_B]){
     block[0][2]='@';
     block[1][0]='@';
+}
+void piece_L_2(char block[LINE_B][COLUMN_B]){
+    block[0][0]='@';
+    block[1][0]='@';
+    block[2][0]='@';
+    block[2][1]='@';
+}
+void piece_L_3(char block[LINE_B][COLUMN_B]){
+    block[1][0]='@';
     block[1][1]='@';
     block[1][2]='@';
+    block[0][2]='@';
 }
 void piece_L_4(char block[LINE_B][COLUMN_B]){
     block[0][0]='@';
@@ -166,16 +148,16 @@ void piece_L_4(char block[LINE_B][COLUMN_B]){
 //--------------------------------------------------
 // BLOCK J and these orientations
 void piece_J(char block[LINE_B][COLUMN_B]){
-    block[1][0]='@';
-    block[1][1]='@';
-    block[1][2]='@';
-    block[2][2]='@';
-}
-void piece_J_2(char block[LINE_B][COLUMN_B]){
+    block[0][0]='@';
     block[0][1]='@';
     block[0][2]='@';
-    block[1][1]='@';
-    block[2][1]='@';
+    block[1][2]='@';
+}
+void piece_J_2(char block[LINE_B][COLUMN_B]){
+    block[0][0]='@';
+    block[0][1]='@';
+    block[1][0]='@';
+    block[2][0]='@';
 }
 void piece_J_3(char block[LINE_B][COLUMN_B]){
     block[0][0]='@';
@@ -186,8 +168,8 @@ void piece_J_3(char block[LINE_B][COLUMN_B]){
 void piece_J_4(char block[LINE_B][COLUMN_B]){
     block[0][1]='@';
     block[1][1]='@';
-    block[2][0]='@';
     block[2][1]='@';
+    block[2][0]='@';
 }
 //------------------------------------------------
 //This function generate new block
@@ -196,11 +178,13 @@ int Gen_block(char block[LINE_B][COLUMN_B])
     srand(time(NULL));
     int orientation;
     int random_block = (rand()%7)+1;
+    //int random_block = 3;
     if (random_block == 1)
     {
         clean_Block(block);
         square(block);
         printf("Le bloque qui arrive est un carré\n");
+		show_block(block);
     }
     else if  (random_block ==2)
     {
@@ -315,9 +299,10 @@ int Gen_block(char block[LINE_B][COLUMN_B])
             clean_Block(block);
             piece_s_2(block);
         }
+        return orientation;
     }
     else if(random_block == 6){
-        printf("Le bloque qui arrive est une line\n");
+        printf("Le bloque qui arrive est un L\n");
         printf("choisir l'orientation:\n");
         clean_Block(block);
         piece_L(block);
@@ -359,7 +344,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
     }
     else if(random_block == 7)
     {
-        printf("Le bloque qui arrive est une line\n");
+        printf("Le bloque qui arrive est un J\n");
         printf("choisir l'orientation:\n");
         clean_Block(block);
         piece_J(block);
@@ -375,7 +360,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         show_block(block);
         clean_Block(block);
         piece_J_4(block);
-        printf("(%c)", (char) '4');
+        printf("(%c)\n", (char) '4');
         show_block(block);
         scanf("%d", &orientation);
         if (orientation == 1)
@@ -399,7 +384,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
             piece_J_4(block);
         }
     }
-    return random_block;
+    return orientation;
 }
 //show the block in the current turn
 void show_block(char block[LINE_B][COLUMN_B])
@@ -409,32 +394,73 @@ void show_block(char block[LINE_B][COLUMN_B])
         for (int c = 0; c<COLUMN_B; c++)
         {
             printf("|");
-            printf("%c", block[l][c]);
+            textcolor((rand()%15)+1);
+            cprintf("%c", block[l][c]);
         }
         printf("|");
         printf("\n");
     }
 }
-
+//------------------------------------------------
+void out_range_right(int *x,int *y, int column)
+{
+    
+    int back_left[4]={0};
+    int max=0;
+    //Test the collision for the extrem right
+    for (int i = 0; i<4; i++)
+    {
+        if (y[i]>column)
+        {
+            back_left[i] = y[i]-column;
+        }
+    }
+    for (int j = 0; j<4; j++)
+    {
+        if (max<back_left[j])
+        {
+            max = back_left[j];
+        }
+    }
+    for (int k = 0; k<4; k++)
+    {
+        y[k] -= max;
+    }
+}
+//--------------------------------
+void out_range_left(int *x,int *y, int column)
+{
+	int max_abs=0;
+    int abs[4] = {0};
+    for (int i =0; i<4; i++)
+    {
+        if (y[i]<0)
+        {
+            abs[i]=-y[i];
+        }
+    }
+    for (int j = 0; j<4; j++)
+    {
+        if (max_abs<=abs[j])
+        {
+            max_abs = abs[j];
+        }
+    }
+    for (int k = 0; k<4; k++)
+    {
+        y[k] += max_abs;
+    }   
+    
+}
+//--------------------------------
+//------------------------------------------------
+//this function is the most important it's the collision
 void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
 {
-	int x_ref, y_ref=1;
-	y_ref += column;
-	int move =0;
-	//this boucle make the detection of if there is a '@' at the bottom with the reference's coords.
-	for(x_ref = 1; x_ref<LINE_G;x_ref++)
-	{
-		move++;
-		if (grid[x_ref+1][y_ref] == '@')
-		{
-			break;
-		}
-	}
-	printf("%d", move);
 	int x[4]={0};
 	int y[4]={0};
 	int i=0, j=0;
-	for(int line=0;line<LINE_B-1;line++)
+	for(int line=0;line<LINE_B;line++)
 	{
 		for(int column=0;column<COLUMN_B;column++)
 		{
@@ -448,21 +474,23 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 		}
 	}
 	printf("\n");
-	for (int k = 0 ; k<4; k++)
+	for (int i =0; i<4; i++)
 	{
-		x[k] += move;
-		y[k] += column;
+		x[i]+=9;
+		y[i]+=column;
 	}
+	out_range_right(x,y, column);
+    out_range_left(x,y, column);
 	int boole = 1;
-	int cpt;
-	do
+	int counting;
+    while (boole == 1)
 	{
-		cpt = 0;
+		counting = 0;
 		for (int i = 0; i<4; i++)
 		{
 			if (grid[x[i]][y[i]] == ' ')
 			{
-				cpt++;
+				counting++;
 			}
 			else
 			{
@@ -471,18 +499,73 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 					x[iter]--;
 				}
 			}
+            if (counting == 4)
+		    {   
+			    boole = 0;
+		    } 
 		}
-		if (cpt == 4)
-		{
-			boole = 0;
-		} 
-	}while (boole == 1);
-	for (int k = 0 ; k<4; k++){printf("(%d, %d) ", x[k],y[k]);}
+		
+	};
 	for (int iter = 0; iter<4; iter++)
 	{
 		grid[x[iter]][y[iter]] = '@';
 	}
 }
 
+/*int choix_difficulte()
+{
+    int choix;
+    printf("Veuiller choisir la difficulte");
+    printf("(%c) Normal", (char) '1');
+    printf("(%c) Difficile", (char) '2');
+    scanf("%d",choix);
+    if (choix==1)
+    {
+        choix=1;
+    }
+    else if(choix==2)
+    {
+        choix=2;
+    }
+    return choix;
+}
+*/
 
-
+/*int chronometre_clem(int choix_difficulte)
+{
+    int compteur1=10;
+    int compteur2=5;
+    int boole=1;
+    if(choix_difficulte==1)
+    {
+         for(int i=compteur1;i>=0;i--)
+        {
+            Sleep(3000);
+            compteur1--;
+            printf("compteur: %d")
+            if(compteur1==0)
+            {
+                printf("Game Over");
+                boole=0;
+                break;
+                return boole;
+            }
+        }
+    }
+    if(choix_difficulte==2)
+    {
+        for(int j=compteur2;j>=0;j--)
+        {
+            sleep(3000);
+            compteur2--;
+            printf("compteur: %d;")
+            if(compteur2==0)
+            {
+                printf("Game Over");
+                boole=0;
+                break;
+                return boole;
+            }
+        }
+    }
+}*/
