@@ -4,14 +4,20 @@
 #include <time.h>
 #include <stdlib.h>
 #include "couleur.h"
-#include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
-#include <curses.h>
+#include <sys/time.h>
 #define LINE_B 4
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
+//this is function from the sort's td
+unsigned long getTimeMicroSec()
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (1000000 * tv.tv_sec) + tv.tv_usec;
+}
 int choose_col(char block[LINE_B][COLUMN_B])
 {
    int column;
@@ -25,8 +31,7 @@ int choose_col(char block[LINE_B][COLUMN_B])
    		if (boole == 1)
    		{
    			booleen = 1;
-   		}
-   																			
+   		}																		
    }while ((booleen == 0) || (column<1 || column>9));
    return column;
 
@@ -172,12 +177,47 @@ void piece_J_4(char block[LINE_B][COLUMN_B]){
     block[2][0]='@';
 }
 //------------------------------------------------
+int read_int_orientation_4()
+{
+	int orientation;
+	int booleen=0;
+	do 
+   {
+   		printf("Choose an orientation btw 1 to 4\n");
+   		int boole = scanf("%d", &orientation);
+   		while (fgetc(stdin) != '\n'){};
+   		if (boole == 1)
+   		{
+   			booleen = 1;
+   		}
+   																			
+   }while ((booleen == 0) || (orientation<1 || orientation>4));
+   return orientation;
+}
+
+int read_int_orientation_2()
+{
+	int orientation;
+	int booleen=0;
+	do 
+   {
+   		printf("Choose an orientation btw 1 to 2\n");
+   		int boole = scanf("%d", &orientation);
+   		while (fgetc(stdin) != '\n'){};
+   		if (boole == 1)
+   		{
+   			booleen = 1;
+   		}
+   																			
+   }while ((booleen == 0) || (orientation<1 || orientation>2));
+   return orientation;
+}
 //This function generate new block
 int Gen_block(char block[LINE_B][COLUMN_B])
 {
     srand(time(NULL));
-    int orientation;
     int random_block = (rand()%7)+1;
+    int orientation;
     //int random_block = 3;
     if (random_block == 1)
     {
@@ -198,7 +238,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         Line_v(block);
         printf("(%c)\n", (char) '2');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation=read_int_orientation_2();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -230,7 +270,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_en_T_4(block);
         printf("(%c)\n", (char) '4');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation=read_int_orientation_4();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -264,7 +304,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_z_2(block);
         printf("(%c)\n", (char) '2');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation = read_int_orientation_2();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -288,7 +328,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_s_2(block);
         printf("(%c)\n", (char) '2');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation = read_int_orientation_2();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -320,7 +360,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_L_4(block);
         printf("(%c)\n", (char) '4');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation=read_int_orientation_4();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -362,7 +402,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_J_4(block);
         printf("(%c)\n", (char) '4');
         show_block(block);
-        scanf("%d", &orientation);
+        orientation=read_int_orientation_4();
         if (orientation == 1)
         {
             clean_Block(block);
@@ -394,8 +434,7 @@ void show_block(char block[LINE_B][COLUMN_B])
         for (int c = 0; c<COLUMN_B; c++)
         {
             printf("|");
-            textcolor((rand()%15)+1);
-            cprintf("%c", block[l][c]);
+            printf("%c", block[l][c]);
         }
         printf("|");
         printf("\n");
@@ -473,7 +512,6 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 			}
 		}
 	}
-	printf("\n");
 	for (int i =0; i<4; i++)
 	{
 		x[i]+=9;
@@ -489,7 +527,7 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 		for (int i = 0; i<4; i++)
 		{
 			if (grid[x[i]][y[i]] == ' ')
-			{
+			{	
 				counting++;
 			}
 			else
@@ -512,60 +550,4 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 	}
 }
 
-/*int choix_difficulte()
-{
-    int choix;
-    printf("Veuiller choisir la difficulte");
-    printf("(%c) Normal", (char) '1');
-    printf("(%c) Difficile", (char) '2');
-    scanf("%d",choix);
-    if (choix==1)
-    {
-        choix=1;
-    }
-    else if(choix==2)
-    {
-        choix=2;
-    }
-    return choix;
-}
-*/
 
-/*int chronometre_clem(int choix_difficulte)
-{
-    int compteur1=10;
-    int compteur2=5;
-    int boole=1;
-    if(choix_difficulte==1)
-    {
-         for(int i=compteur1;i>=0;i--)
-        {
-            Sleep(3000);
-            compteur1--;
-            printf("compteur: %d")
-            if(compteur1==0)
-            {
-                printf("Game Over");
-                boole=0;
-                break;
-                return boole;
-            }
-        }
-    }
-    if(choix_difficulte==2)
-    {
-        for(int j=compteur2;j>=0;j--)
-        {
-            sleep(3000);
-            compteur2--;
-            printf("compteur: %d;")
-            if(compteur2==0)
-            {
-                printf("Game Over");
-                boole=0;
-                break;
-                return boole;
-            }
-        }
-    }
-}*/

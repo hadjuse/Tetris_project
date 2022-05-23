@@ -35,6 +35,6 @@ void render_score(Joueur player)
 		printf("Message d'erreur = %s \n", strerror(errno));
 		exit(1);
 	}
-	fprintf(fichier,"Bonjour :  %s ! Voici votre score : %d\n", player.username, player.score);
+	fprintf(fichier,"Username :  %s ! Voici votre score : %d\n", player.username, player.score);
 	fclose(fichier);
 }

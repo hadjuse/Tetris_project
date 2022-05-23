@@ -6,7 +6,7 @@
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
-int choix_difficulte()
+//int choix_difficulte();
 int Gen_block(char block[LINE_B][COLUMN_B]);
 void clean_Block(char block[LINE_B][COLUMN_B]);
 void clean_top_grid(char grid[LINE_G][COLUMN_G]);
@@ -15,6 +15,5 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 int choose_col(char block[LINE_B][COLUMN_B]);
 void out_range_right(int *x,int *y, int column);
 void out_range_left(int *x,int *y, int column);
-
-int chronometre_clem(int choix_difficulte);
+unsigned long getTimeMicroSec();
 #endif

@@ -5,6 +5,7 @@
 #include "plateau.h"
 #include "score.h"
 #include <time.h>
+//#include <conio.h>
 #define LINE 10
 #define COLUMN 10
 #define LINE_B 4
@@ -27,6 +28,7 @@ int game_over(char grid [LINE][COLUMN])
 }
 void game()
 {
+	
 	Joueur player;
 	player = Gen_Player();
     char block[LINE_B][COLUMN_B];
@@ -36,9 +38,17 @@ void game()
     //show_grid(grid);
     do 
     {
-		int choix_difficulte();
+    	unsigned long time_1=getTimeMicroSec();
     	show_name(player);
         int column=choose_col(block);
+        unsigned long time_2=getTimeMicroSec();
+       	unsigned long ecart = (time_2-time_1)/1000000;
+        printf("You spend %ld second to choose your column \n", (time_2-time_1)/1000000);
+        if (ecart>6)
+        {
+        	printf("You spend too much time to choose  your column!\n");
+        	column = (rand()%9)+1;
+        }
         collision(grid,block, column);
         printf("\n");
         show_block(block);
@@ -78,6 +88,7 @@ void game()
         //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while ((!game_over(grid)) || (chronometre_clem!=1));
+        
+    }while ((!game_over(grid)));
 	render_score(player);
 }
