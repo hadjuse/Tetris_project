@@ -11,6 +11,7 @@
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
+//typedef enum {A = 1 ,B, C} ;
 //this is function from the sort's td
 unsigned long getTimeMicroSec()
 {
@@ -177,6 +178,23 @@ void piece_J_4(char block[LINE_B][COLUMN_B]){
     block[2][0]='@';
 }
 //------------------------------------------------
+int read_int_orientation()
+{
+	int orientation;
+	int booleen=0;
+	do 
+   {
+   		printf("Choose an orientation btw 1 to 4\n");
+   		int boole = scanf("%d", &orientation);
+   		while (fgetc(stdin) != '\n'){};
+   		if (boole == 1)
+   		{
+   			booleen = 1;
+   		}
+   																			
+   }while ((booleen == 0) || (orientation<1 || orientation>4));
+   return orientation;
+}
 int read_int_orientation_4()
 {
 	int orientation;
@@ -216,9 +234,9 @@ int read_int_orientation_2()
 int Gen_block(char block[LINE_B][COLUMN_B])
 {
     srand(time(NULL));
-    int random_block = (rand()%7)+1;
+    //int random_block = (rand()%7)+1;
     int orientation;
-    //int random_block = 3;
+    int random_block = (rand()%7)+1;
     if (random_block == 1)
     {
         clean_Block(block);
@@ -493,6 +511,43 @@ void out_range_left(int *x,int *y, int column)
 }
 //--------------------------------
 //------------------------------------------------
+void mystery_collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
+{
+    int x[4]={0};
+	int y[4]={0};
+	int i=0, j=0;
+	for(int line=0;line<LINE_B;line++)
+	{
+		for(int column=0;column<COLUMN_B;column++)
+		{
+			if (block[line][column]=='@')
+			{
+				x[i]=line;
+				y[j]=column;
+				i++;
+				j++;
+			}
+		}
+	}
+    for (int iter = 0; iter<4; iter++)
+    {
+        y[iter] += column-1;
+        for (int line = 0; line<LINE_G-1; line++)
+        {
+            if (grid[x[iter]+1][y[iter]]=='@')
+            {
+                break;
+            }
+            else
+            {
+                x[iter]++;
+            }
+        }
+        grid[x[iter]][y[iter]]='@';
+    }
+    out_range_right(x,y, column);
+    out_range_left(x,y, column);
+}
 //this function is the most important it's the collision
 void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
 {

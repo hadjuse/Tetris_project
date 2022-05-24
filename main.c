@@ -10,6 +10,38 @@
 //this file is the main execution of all programms.
 int main()
 {
-    game();
+    int choix;
+    int booleen = 0;
+    do 
+   {
+   		printf("Veuiller choisir votre difficulte\n");
+        printf("(%c) Easy\n", (char) '1');
+        printf("(%c) Normal\n", (char) '2');
+        printf("(%c) Hard\n", (char) '3');
+        printf("(%c) Mystery\n", (char) '4');
+   		int boole = scanf("%d", &choix);
+   		while (fgetc(stdin) != '\n'){};
+   		if (boole == 1)
+   		{
+   			booleen = 1;
+   		}																		
+   }while ((booleen == 0) || (choix<1 || choix>4));
+    printf("le choix de la difficulte est %d\n", choix);
+    if(choix==1)
+    {
+        game_easy();
+    }
+    else if(choix==2)
+    {
+        game_normal();
+    }
+    else if(choix==3)
+    {
+        game_hard();
+    }
+    else if (choix == 4 )
+    {
+        mystery_game();
+    }
     return 0;
 }
