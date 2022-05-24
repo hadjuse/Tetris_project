@@ -14,7 +14,6 @@ void show_name();
 //void scoring(char grid[LINE_G][COLUMN_G]);
 void show_score(Joueur player);
 //void down(char grid[LINE_G][COLUMN_G]);
-void render_score();
+void render_score(Joueur player);
+void leaderboard();
 #endif
-/*
-				*/

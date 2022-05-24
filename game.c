@@ -264,6 +264,6 @@ void mystery_game()
         //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while ((!game_over(grid)));
+    }while (game_over(grid)==0);
 	render_score(player);	
 }	
