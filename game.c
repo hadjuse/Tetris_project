@@ -10,19 +10,6 @@
 #define COLUMN 10
 #define LINE_B 4
 #define COLUMN_B 4
-int game_over(char grid [LINE][COLUMN])
-{
-	int boole=0;
-	for(int j=0;j<COLUMN;j++)
-	{
-		if (grid[0][j]=='@')
-		{
-			printf("Game over");
-			boole=1;
-		}
-	}
-	return boole;
-}
 void game_normal()
 {
 	Joueur player;
@@ -31,7 +18,7 @@ void game_normal()
     char grid[LINE_G][COLUMN_G];
     char username[50];
     Generate(grid);
-    //show_grid(grid);
+	int colli;
     do 
     {
 		unsigned long time_1=getTimeMicroSec();
@@ -45,7 +32,7 @@ void game_normal()
         	printf("You spend too much time to choose  your column!\n");
         	column = (rand()%9)+1;
 		}
-		collision(grid,block, column);
+		colli = collision(grid,block, column);
         printf("\n");
         show_block(block);
 		int compteur=0;
@@ -83,7 +70,7 @@ void game_normal()
         //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while ((!game_over(grid)));
+    }while (!colli);
 	render_score(player);
 }
 void game_easy()
@@ -92,13 +79,13 @@ void game_easy()
 	player = Gen_Player();
     char block[LINE_B][COLUMN_B];
     char grid[LINE_G][COLUMN_G];
-    char username[50];
+	int colli;
     Generate(grid);
     do 
     {
     	show_name(player);
         int column=choose_col(block);
-		collision(grid,block, column);
+		colli = collision(grid,block, column);
         printf("\n");
         show_block(block);
 		int compteur=0;
@@ -136,7 +123,7 @@ void game_easy()
         //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while ((!game_over(grid)));
+    }while (!colli);
 	render_score(player);
 }
 void game_hard()
@@ -147,7 +134,7 @@ void game_hard()
     char grid[LINE_G][COLUMN_G];
     char username[50];
     Generate(grid);
-    //show_grid(grid);
+	int colli;
     do 
     {
 		unsigned long time_1=getTimeMicroSec();
@@ -161,7 +148,7 @@ void game_hard()
         	printf("You spend too much time to choose  your column!\n");
         	column = (rand()%9)+1;
 		}
-		collision(grid,block, column);
+		colli = collision(grid,block, column);
         printf("\n");
         show_block(block);
 		int compteur=0;
@@ -196,10 +183,9 @@ void game_hard()
 			}
 			
 		}
-        //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while ((!game_over(grid)));
+    }while (!colli);
 	render_score(player);
 }
 void mystery_game()
@@ -210,20 +196,13 @@ void mystery_game()
     char grid[LINE_G][COLUMN_G];
     char username[50];
     Generate(grid);
+	int colli = 0;
     //show_grid(grid);
     do 
     {
 		//unsigned long time_1=getTimeMicroSec();
     	show_name(player);
         int column=choose_col(block);
-        //unsigned long time_2=getTimeMicroSec();
-       	//unsigned long ecart = (time_2-time_1)/1000000;
-        //printf("You spend %ld second to choose your column \n", (time_2-time_1)/1000000);
-        /*if (ecart>6)
-        {
-        	printf("You spend too much time to choose  your column!\n");
-        	column = (rand()%9)+1;
-		}*/
 		mystery_collision(grid,block, column);
         printf("\n");
         show_block(block);
@@ -262,6 +241,6 @@ void mystery_game()
         //printf("\033[%sm",32);
         show_score(player);
         show_grid(grid);
-    }while (game_over(grid)==0);
+    }while (colli);
 	render_score(player);	
 }	

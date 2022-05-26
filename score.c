@@ -22,7 +22,6 @@ void show_name(Joueur player)
 
 void show_score(Joueur player)
 {
-	
 	couleur("33");
 	printf("Voici votre score actuel: %d\n", player.score);
 	couleur("0");

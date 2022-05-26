@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include "couleur.h"
 #include <string.h>
-#include <stdbool.h>
 #include <sys/time.h>
 #define LINE_B 4
 #define COLUMN_B 4
@@ -445,16 +444,26 @@ int Gen_block(char block[LINE_B][COLUMN_B])
     return orientation;
 }
 //show the block in the current turn
+int generer_bornes(int min, int max)
+{
+    srand(time(NULL));
+    return rand()%(max-min+1) + min;
+}
 void show_block(char block[LINE_B][COLUMN_B])
 {
+    int alea = generer_bornes(30, 37);
+    char alea_c[2];
+    sprintf(alea_c,"%d", alea); // convert int -> char
     for (int l = 0; l<LINE_B; l++)
     {
+        couleur(alea_c);
         for (int c = 0; c<COLUMN_B; c++)
         {
             printf("|");
             printf("%c", block[l][c]);
         }
         printf("|");
+        couleur("0");
         printf("\n");
     }
 }
@@ -549,7 +558,7 @@ void mystery_collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B],
     out_range_left(x,y, column);
 }
 //this function is the most important it's the collision
-void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
+int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
 {
 	int x[4]={0};
 	int y[4]={0};
@@ -575,6 +584,7 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 	out_range_right(x,y, column);
     out_range_left(x,y, column);
 	int boole = 1;
+    int over = 0;
 	int counting;
     while (boole == 1)
 	{
@@ -590,19 +600,28 @@ void collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int col
 				for (int iter = 0; iter<4; iter++)
 				{
 					x[iter]--;
-				}
+                    if (x[iter]<=0)
+                    {
+                        over = 1;
+                        break;
+                    }				
+                }
 			}
-            if (counting == 4)
-		    {   
-			    boole = 0;
-		    } 
+            if (over == 1 || counting == 4){boole = 0;}
 		}
-		
 	};
 	for (int iter = 0; iter<4; iter++)
 	{
+        if (over == 1)
+        {
+            couleur("31");
+            printf("game over !");
+            couleur("0");
+            break;
+        }
 		grid[x[iter]][y[iter]] = '@';
 	}
+    return over;
 }
 
 

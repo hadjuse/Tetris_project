@@ -3,7 +3,8 @@
 #include "plateau.h"
 #include <stdlib.h>
 #include "couleur.h"
-
+#include <time.h>
+#include <string.h>
 // This function will fill a bi-dimensionnal tab which will be use to containing blocks
 //in the game
 void Generate(char tab[LINE][COLUMN])
@@ -27,15 +28,27 @@ void show_grid(char tab[LINE][COLUMN])
     printf("\n");
     for (int l = 0; l<LINE; l++)
     {
-        printf("\33[48;2;%d;%d;%dm", 204, 255, 255);
-        couleur("34");
+        printf("\33[48;2;%d;%d;%dm", 3,34, 76);
         for (int c = 0; c<COLUMN; c++)
         {
-            
-            printf("|");
-            //printf("\33[38;2;%d;%d;%dm", rand()%256, rand()%256, rand()%256);
-            printf("%c", tab[l][c]);
-            
+            if (l<10 && l>=6)
+            {
+                couleur("32");
+                printf("|");
+                printf("%c", tab[l][c]);
+            }
+            else if(l<6 && l>=2)
+            {
+                couleur("33");
+                printf("|");
+                printf("%c", tab[l][c]);
+            }
+            else
+            {
+                couleur("31");
+                printf("|");
+                printf("%c", tab[l][c]);
+            }
         }
         printf("|");
         couleur("0");

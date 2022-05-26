@@ -6,5 +6,4 @@ void game_normal();
 void game_easy();
 void game_hard();
 void mystery_game();
-int game_over(char grid[LINE_G][COLUMN_G]);
 #endif
