@@ -11,9 +11,8 @@ typedef struct
 }Joueur;
 Joueur Gen_Player();
 void show_name();
-//void scoring(char grid[LINE_G][COLUMN_G]);
 void show_score(Joueur player);
-//void down(char grid[LINE_G][COLUMN_G]);
 void render_score(Joueur player);
-void leaderboard();
+void leaderboard(Joueur *read_file, int *nbp);
+Joueur *read_file(int*nmbPlayer);
 #endif

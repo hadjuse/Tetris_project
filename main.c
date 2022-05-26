@@ -18,7 +18,6 @@ int main()
         printf("(%c) Easy\n", (char) '1');
         printf("(%c) Normal\n", (char) '2');
         printf("(%c) Hard\n", (char) '3');
-        printf("(%c) Mystery\n", (char) '4');
    		int boole = scanf("%d", &choix);
    		while (fgetc(stdin) != '\n'){};
    		if (boole == 1)
@@ -38,10 +37,6 @@ int main()
     else if(choix==3)
     {
         game_hard();
-    }
-    else if (choix == 4 )
-    {
-        mystery_game();
     }
     return 0;
 }

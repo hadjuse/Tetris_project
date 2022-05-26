@@ -23,7 +23,7 @@ void show_grid(char tab[LINE][COLUMN])
     printf("This is your grid:\n");
     // I made the 23th line in 1 line beause there is only one instruction
     couleur("35");
-    for (int i=0; i<10; i++){printf(" %c", (char)65+i);}
+    for (int i=0; i<10; i++){printf(" %d", i);}
     couleur("0");
     printf("\n");
     for (int l = 0; l<LINE; l++)

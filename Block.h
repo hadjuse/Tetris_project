@@ -13,8 +13,6 @@ void clean_top_grid(char grid[LINE_G][COLUMN_G]);
 void show_block(char block[LINE_B][COLUMN_B]);
 int choose_col(char block[LINE_B][COLUMN_B]);
 void out_range_right(int *x,int *y, int column);
-void out_range_left(int *x,int *y, int column);
 unsigned long getTimeMicroSec();
-void mystery_collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column);
 int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column);
 #endif

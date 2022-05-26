@@ -33,10 +33,73 @@ void render_score(Joueur player)
 	if (fichier==NULL)
 	{
 		printf("Ouverture impossible\n");
-		printf("code d'erreur	=%d \n", errno	);
+		printf("code d'erreur	=%d \n", errno);
 		printf("Message d'erreur = %s \n", strerror(errno));
 		exit(1);
 	}
 	fprintf(fichier,"%s %d\n", player.username, player.score);
+	fclose(fichier);
+}
+void tri(Joueur *tabPlayer, int *nbp)
+{
+	int tmp;	
+	int index;
+	for (int i=0; i < (*nbp-1); i++)
+	{
+		index = i;
+	
+		for (int j=i + 1; j < *nbp; j++)
+		{
+		if (tabPlayer[i].score <= tabPlayer[j].score)
+			index = j;
+		}
+		if (index != i)
+		{
+			tmp = tabPlayer[i].score;
+			tabPlayer[i].score = tabPlayer[index].score;
+			tabPlayer[index].score = tmp;
+		}
+  	}
+}
+Joueur *read_file(int*nmbPlayer)
+{
+	Joueur *tab = NULL;
+	FILE* fichier = NULL;
+	fichier = fopen("score.txt", "r");
+	int echangeur=0;
+	if (fichier==NULL)
+	{
+		printf("Ouverture impossible\n");
+		printf("code d'erreur	=%d \n", errno	);
+		printf("Message d'erreur = %s \n", strerror(errno));
+		exit(1);
+	}
+	char lignePlayer[1000];
+	while (fgets(lignePlayer, 999, fichier) !=NULL)
+	{
+		*nmbPlayer = *nmbPlayer+1;
+	}
+	tab = malloc(*nmbPlayer * sizeof(Joueur));
+	rewind(fichier);
+	for(int i=0;i<=*nmbPlayer;i++)
+	{
+		fscanf(fichier, "%s", tab[i].username);
+		fscanf(fichier, "%d", &tab[i].score);
+	}
+	fclose(fichier);
+	tri(tab, nmbPlayer);
+	return tab;
+}
+
+void leaderboard(Joueur *tabPlayer, int *nbp)
+{
+	FILE* fichier=NULL;
+	fichier=fopen("leaderBoard.txt","w");
+	fprintf(fichier,"Leaderboard\n");
+	
+	for (int i =0 ; i<*nbp; i++)
+	{
+		fprintf(fichier," %d° |[|USER/SCORE: %s / %d|]\n", i+1,tabPlayer[i].username,tabPlayer[i].score);
+	}
 	fclose(fichier);
 }

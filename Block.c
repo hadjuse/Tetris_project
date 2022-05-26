@@ -10,7 +10,6 @@
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
-//typedef enum {A = 1 ,B, C} ;
 //this is function from the sort's td
 unsigned long getTimeMicroSec()
 {
@@ -25,14 +24,14 @@ int choose_col(char block[LINE_B][COLUMN_B])
    int booleen = 0;
    do 
    {
-   		printf("Choose column btw 1 to 9\n");
+   		printf("Choose column btw 0 to 9\n");
    		int boole = scanf("%d", &column);
    		while (fgetc(stdin) != '\n'){};
    		if (boole == 1)
    		{
    			booleen = 1;
    		}																		
-   }while ((booleen == 0) || (column<1 || column>9));
+   }while ((booleen == 0) || (column<0 || column>9));
    return column;
 
 }
@@ -233,7 +232,7 @@ int read_int_orientation_2()
 int Gen_block(char block[LINE_B][COLUMN_B])
 {
     srand(time(NULL));
-    //int random_block = (rand()%7)+1;
+    //int random_block = 2;
     int orientation;
     int random_block = (rand()%7)+1;
     if (random_block == 1)
@@ -468,95 +467,32 @@ void show_block(char block[LINE_B][COLUMN_B])
     }
 }
 //------------------------------------------------
+//--------------------------------
 void out_range_right(int *x,int *y, int column)
 {
-    
-    int back_left[4]={0};
-    int max=0;
-    //Test the collision for the extrem right
-    for (int i = 0; i<4; i++)
-    {
-        if (y[i]>column)
-        {
-            back_left[i] = y[i]-column;
-        }
-    }
-    for (int j = 0; j<4; j++)
-    {
-        if (max<back_left[j])
-        {
-            max = back_left[j];
-        }
-    }
-    for (int k = 0; k<4; k++)
-    {
-        y[k] -= max;
-    }
-}
-//--------------------------------
-void out_range_left(int *x,int *y, int column)
-{
-	int max_abs=0;
+	int min_abs=0;
     int abs[4] = {0};
+    int back[4] = {0};
     for (int i =0; i<4; i++)
     {
-        if (y[i]<0)
+        if (y[i]>9)
         {
-            abs[i]=-y[i];
+            back[i]= y[i]-9;
         }
     }
     for (int j = 0; j<4; j++)
     {
-        if (max_abs<=abs[j])
+        if (back[j]>min_abs && back[j] != 0)
         {
-            max_abs = abs[j];
+            min_abs = -back[j];
         }
     }
-    for (int k = 0; k<4; k++)
+    for (int j = 0; j<4; j++)
     {
-        y[k] += max_abs;
-    }   
-    
+        y[j] += min_abs;
+    }
 }
 //--------------------------------
-//------------------------------------------------
-void mystery_collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
-{
-    int x[4]={0};
-	int y[4]={0};
-	int i=0, j=0;
-	for(int line=0;line<LINE_B;line++)
-	{
-		for(int column=0;column<COLUMN_B;column++)
-		{
-			if (block[line][column]=='@')
-			{
-				x[i]=line;
-				y[j]=column;
-				i++;
-				j++;
-			}
-		}
-	}
-    for (int iter = 0; iter<4; iter++)
-    {
-        y[iter] += column-1;
-        for (int line = 0; line<LINE_G-1; line++)
-        {
-            if (grid[x[iter]+1][y[iter]]=='@')
-            {
-                break;
-            }
-            else
-            {
-                x[iter]++;
-            }
-        }
-        grid[x[iter]][y[iter]]='@';
-    }
-    out_range_right(x,y, column);
-    out_range_left(x,y, column);
-}
 //this function is the most important it's the collision
 int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
 {
@@ -565,24 +501,20 @@ int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int colu
 	int i=0, j=0;
 	for(int line=0;line<LINE_B;line++)
 	{
-		for(int column=0;column<COLUMN_B;column++)
+		for(int c=0;c<COLUMN_B;c++)
 		{
-			if (block[line][column]=='@')
+			if (block[line][c]=='@')
 			{
 				x[i]=line;
-				y[j]=column;
+				y[j]=c;
+                x[i]+=9;
+                y[j]+=(column);
 				i++;
 				j++;
 			}
 		}
 	}
-	for (int i =0; i<4; i++)
-	{
-		x[i]+=9;
-		y[i]+=column;
-	}
 	out_range_right(x,y, column);
-    out_range_left(x,y, column);
 	int boole = 1;
     int over = 0;
 	int counting;
@@ -615,7 +547,7 @@ int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int colu
         if (over == 1)
         {
             couleur("31");
-            printf("game over !");
+            printf("game over ! Tu seras dans le classement à la prochaine game !");
             couleur("0");
             break;
         }
