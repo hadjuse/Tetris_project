@@ -234,9 +234,8 @@ int read_int_orientation_2()
 int Gen_block(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
 {
     srand(time(NULL));
-    int random_block = 3;
     int orientation;
-   // int random_block = (rand()%7)+1;
+    int random_block = (rand()%7)+1;
     if (random_block == 1)
     {
         clean_Block(block);
