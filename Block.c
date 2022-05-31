@@ -10,6 +10,8 @@
 #define COLUMN_B 4
 #define LINE_G 10
 #define COLUMN_G 10
+#define LINE_O 4
+#define COLUMN_O 18
 //this is function from the sort's td
 unsigned long getTimeMicroSec()
 {
@@ -17,10 +19,10 @@ unsigned long getTimeMicroSec()
 	gettimeofday(&tv, NULL);
 	return (1000000 * tv.tv_sec) + tv.tv_usec;
 }
-int choose_col(char block[LINE_B][COLUMN_B])
+int choose_col(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
 {
    int column;
-   int rand_block_and_orientation= Gen_block(block);
+   int rand_block_and_orientation= Gen_block(block,grid);
    int booleen = 0;
    do 
    {
@@ -182,7 +184,7 @@ int read_int_orientation()
 	int booleen=0;
 	do 
    {
-   		printf("Choose an orientation btw 1 to 4\n");
+   		printf("\nChoose an orientation btw 1 to 4\n");
    		int boole = scanf("%d", &orientation);
    		while (fgetc(stdin) != '\n'){};
    		if (boole == 1)
@@ -199,7 +201,7 @@ int read_int_orientation_4()
 	int booleen=0;
 	do 
    {
-   		printf("Choose an orientation btw 1 to 4\n");
+   		printf("\nChoose an orientation btw 1 to 4\n");
    		int boole = scanf("%d", &orientation);
    		while (fgetc(stdin) != '\n'){};
    		if (boole == 1)
@@ -229,12 +231,12 @@ int read_int_orientation_2()
    return orientation;
 }
 //This function generate new block
-int Gen_block(char block[LINE_B][COLUMN_B])
+int Gen_block(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
 {
     srand(time(NULL));
-    //int random_block = 2;
+    int random_block = 3;
     int orientation;
-    int random_block = (rand()%7)+1;
+   // int random_block = (rand()%7)+1;
     if (random_block == 1)
     {
         clean_Block(block);
@@ -244,6 +246,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
     }
     else if  (random_block ==2)
     {
+	
         printf("Le bloque qui arrive est une line\n");
         printf("choisir l'orientation:\n");
         clean_Block(block);
@@ -286,6 +289,7 @@ int Gen_block(char block[LINE_B][COLUMN_B])
         piece_en_T_4(block);
         printf("(%c)\n", (char) '4');
         show_block(block);
+        
         orientation=read_int_orientation_4();
         if (orientation == 1)
         {
@@ -452,11 +456,12 @@ void show_block(char block[LINE_B][COLUMN_B])
 {
     int alea = generer_bornes(30, 37);
     char alea_c[2];
+    int l,c;
     sprintf(alea_c,"%d", alea); // convert int -> char
-    for (int l = 0; l<LINE_B; l++)
+    for (l = 0; l<LINE_B; l++)
     {
         couleur(alea_c);
-        for (int c = 0; c<COLUMN_B; c++)
+        for (c = 0; c<COLUMN_B; c++)
         {
             printf("|");
             printf("%c", block[l][c]);
@@ -466,7 +471,6 @@ void show_block(char block[LINE_B][COLUMN_B])
         printf("\n");
     }
 }
-//------------------------------------------------
 //--------------------------------
 void out_range_right(int *x,int *y, int column)
 {

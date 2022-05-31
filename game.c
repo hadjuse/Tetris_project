@@ -20,16 +20,16 @@ void game_normal()
 	tabPlayer= read_file(nbP);
 	Joueur player;
 	player = Gen_Player();
-    char block[LINE_B][COLUMN_B];
-    char grid[LINE_G][COLUMN_G];
-    char username[50];
+    	char block[LINE_B][COLUMN_B];
+   	 char grid[LINE_G][COLUMN_G];
+    	char username[50];
     Generate(grid);
 	int colli;
     do 
     {
 		unsigned long time_1=getTimeMicroSec();
     	show_name(player);
-        int column=choose_col(block);
+        int column=choose_col(block, grid);
         unsigned long time_2=getTimeMicroSec();
        	unsigned long ecart = (time_2-time_1)/1000000;
         printf("You spend %ld second to choose your column \n", (time_2-time_1)/1000000);
@@ -98,7 +98,7 @@ void game_easy()
     do 
     {
 		show_name(player);
-        int column=choose_col(block);
+        int column=choose_col(block, grid);
 		colli = collision(grid,block, column);
         printf("\n");
         show_block(block);
@@ -159,7 +159,7 @@ void game_hard()
     {
 		unsigned long time_1=getTimeMicroSec();
     	show_name(player);
-        int column=choose_col(block);
+        int column=choose_col(block, grid);
         unsigned long time_2=getTimeMicroSec();
        	unsigned long ecart = (time_2-time_1)/1000000;
         printf("You spend %ld second to choose your column \n", (time_2-time_1)/1000000);
