@@ -10,6 +10,7 @@
 #define COLUMN 10
 #define LINE_B 4
 #define COLUMN_B 4
+//the three functions are the difficulties (you just only need to check the first function because the rest is a copy past from 'game_normal()' 
 void game_normal()
 {
 	int *nbP=NULL;
@@ -44,6 +45,8 @@ void game_normal()
         printf("\n");
         show_block(block);
 		int compteur=0;
+		//------------------------------------------
+		/*This part add points to the score*/
 		for(int x=0; x<LINE_G; x++)
 		{
 			compteur = 0;
@@ -75,7 +78,7 @@ void game_normal()
 			}
 			
 		}
-        //printf("\033[%sm",32);
+		//------------------------------------------
         show_score(player);
         show_grid(grid);
     }while (!colli);

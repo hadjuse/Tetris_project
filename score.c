@@ -40,7 +40,7 @@ void render_score(Joueur player)
 	fprintf(fichier,"%s %d\n", player.username, player.score);
 	fclose(fichier);
 }
-void tri(Joueur *tabPlayer, int *nbp)
+void tri(Joueur *tabPlayer, int *nbp)// select sort
 {
 	int tmp;	
 	int index;
@@ -58,10 +58,11 @@ void tri(Joueur *tabPlayer, int *nbp)
 			tmp = tabPlayer[i].score;
 			tabPlayer[i].score = tabPlayer[index].score;
 			tabPlayer[index].score = tmp;
+			
 		}
   	}
 }
-Joueur *read_file(int*nmbPlayer)
+Joueur *read_file(int*nmbPlayer)// pick the name and score in the file 'score.txt' and place them on a struct tab.
 {
 	Joueur *tab = NULL;
 	FILE* fichier = NULL;
@@ -75,11 +76,11 @@ Joueur *read_file(int*nmbPlayer)
 		exit(1);
 	}
 	char lignePlayer[1000];
-	while (fgets(lignePlayer, 999, fichier) !=NULL)
+	while (fgets(lignePlayer, 999, fichier) !=NULL)// count the number of player.
 	{
 		*nmbPlayer = *nmbPlayer+1;
 	}
-	tab = malloc(*nmbPlayer * sizeof(Joueur));
+	tab = malloc(*nmbPlayer * sizeof(Joueur));// create new tab
 	rewind(fichier);
 	for(int i=0;i<=*nmbPlayer;i++)
 	{
@@ -91,7 +92,7 @@ Joueur *read_file(int*nmbPlayer)
 	return tab;
 }
 
-void leaderboard(Joueur *tabPlayer, int *nbp)
+void leaderboard(Joueur *tabPlayer, int *nbp)//generate leaderboard
 {
 	FILE* fichier=NULL;
 	fichier=fopen("leaderBoard.txt","w");

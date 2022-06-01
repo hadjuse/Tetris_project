@@ -8,7 +8,6 @@
 #define COLUMN_G 10
 #define LINE_O 4
 #define COLUMN_O 18
-//int choix_difficulte();
 int Gen_block(char block[LINE_B][COLUMN_B], char grid[LINE_G][COLUMN_G]);
 void clean_Block(char block[LINE_B][COLUMN_B]);
 void clean_top_grid(char grid[LINE_G][COLUMN_G]);

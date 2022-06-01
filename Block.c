@@ -12,8 +12,7 @@
 #define COLUMN_G 10
 #define LINE_O 4
 #define COLUMN_O 18
-//this is function from the sort's td
-unsigned long getTimeMicroSec()
+unsigned long getTimeMicroSec()//this function get the current time is microsec.
 {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
@@ -24,6 +23,7 @@ int choose_col(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
    int column;
    int rand_block_and_orientation= Gen_block(block,grid);
    int booleen = 0;
+   //This do while check if the scanf is a type of int or not and if the user type a number between 0-9.
    do 
    {
    		printf("Choose column btw 0 to 9\n");
@@ -37,7 +37,7 @@ int choose_col(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
    return column;
 
 }
-void clean_Block(char block[LINE_B][COLUMN_B])
+void clean_Block(char block[LINE_B][COLUMN_B])// clean the global block which will be use for multiple function.
 {
     for (int l = 0; l<LINE_B; l++)
     {
@@ -195,7 +195,7 @@ int read_int_orientation()
    }while ((booleen == 0) || (orientation<1 || orientation>4));
    return orientation;
 }
-int read_int_orientation_4()
+int read_int_orientation_4()//This function check if the scanf is a type of int or not and if the user type a number between 1-4.
 {
 	int orientation;
 	int booleen=0;
@@ -213,7 +213,7 @@ int read_int_orientation_4()
    return orientation;
 }
 
-int read_int_orientation_2()
+int read_int_orientation_2()//This function check if the scanf is a type of int or not and if the user type a number between 1-2.
 {
 	int orientation;
 	int booleen=0;
@@ -230,9 +230,10 @@ int read_int_orientation_2()
    }while ((booleen == 0) || (orientation<1 || orientation>2));
    return orientation;
 }
-//This function generate new block
+//This function generate new block with random orientation
 int Gen_block(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
 {
+	//Multiple Function is use to generate a block such as the shape's function.
     srand(time(NULL));
     int orientation;
     int random_block = (rand()%7)+1;
@@ -445,21 +446,22 @@ int Gen_block(char block[LINE_B][COLUMN_B],char grid[LINE_G][COLUMN_G])
     }
     return orientation;
 }
-//show the block in the current turn
-int generer_bornes(int min, int max)
+
+int generer_bornes(int min, int max)// basic function which generate a random number between min and max.
 {
     srand(time(NULL));
     return rand()%(max-min+1) + min;
 }
+//show the block in the current turn
 void show_block(char block[LINE_B][COLUMN_B])
 {
     int alea = generer_bornes(30, 37);
     char alea_c[2];
     int l,c;
     sprintf(alea_c,"%d", alea); // convert int -> char
-    for (l = 0; l<LINE_B; l++)
+    for (l = 0; l<LINE_B; l++) // double boucle wich show the current block
     {
-        couleur(alea_c);
+        couleur(alea_c); // couleur is from couleur.h
         for (c = 0; c<COLUMN_B; c++)
         {
             printf("|");
@@ -471,10 +473,11 @@ void show_block(char block[LINE_B][COLUMN_B])
     }
 }
 //--------------------------------
-void out_range_right(int *x,int *y, int column)
+void out_range_right(int *x,int *y, int column)//if the coords of a block is > 9 it will automatically adjust the coords in order that they will be in the grid 
 {
 	int min_abs=0;
     int abs[4] = {0};
+    /* we have created 2 tab because we need to calculate 4 coords*/
     int back[4] = {0};
     for (int i =0; i<4; i++)
     {
@@ -498,10 +501,14 @@ void out_range_right(int *x,int *y, int column)
 //--------------------------------
 //this function is the most important it's the collision
 int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int column)
+/*The idea of the collision is that we put the piece at the bottom and
+if there is another shape which is overlayed by the current piece that we want to place, 
+so we decrease the X position of the piece that we want to place until that there is no shape under the piec that we want to place*/
 {
 	int x[4]={0};
 	int y[4]={0};
 	int i=0, j=0;
+	//this double boucle take coords from the block and add +9 at the line in order to be at the bottom of the grid
 	for(int line=0;line<LINE_B;line++)
 	{
 		for(int c=0;c<COLUMN_B;c++)
@@ -517,11 +524,11 @@ int collision(char grid[LINE_G][COLUMN_G],char block[LINE_B][COLUMN_B], int colu
 			}
 		}
 	}
-	out_range_right(x,y, column);
+	out_range_right(x,y, column);//we adjust the piece in order to stay in the grid.
 	int boole = 1;
     int over = 0;
 	int counting;
-    while (boole == 1)
+    while (boole == 1)// this while loop detect if the current piece overlay another previous piece which was already on the grid
 	{
 		counting = 0;
 		for (int i = 0; i<4; i++)
