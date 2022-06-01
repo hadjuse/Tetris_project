@@ -14,6 +14,7 @@ Pour executer le programme aprés la compilation veuiller entrer la commande "./
 Par la suite le programme va se lancer.
 
 Bonus si vous voulez voir votre score, ouvrer le fichier leaderboard.txt 
+
 PS: il faut jouer une autre partie pour voir votre score dans le leaderboard.
 
 Bienvenue dans notre Tetris.
